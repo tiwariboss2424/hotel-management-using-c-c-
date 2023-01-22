@@ -1,0 +1,932 @@
+#include<stdio.h>
+#include<conio.h>
+#include<string.h>
+#include<stdlib.h>
+#include<dos.h>
+void menu();
+void conditional(int );
+void registr();
+void about();
+void login();
+void weblayout();
+void menu2();
+void choose();
+void breakfast();
+void options(int);
+void select();
+void dishes();
+void showInfo();
+void info();
+void breakfast();
+void lunch();
+void dinner();
+struct info{
+	char name[30];
+	char email[50];
+	int age[5];
+	char category[30];
+	char dish[20];
+	char contact[15];
+}man;
+int main(){
+	window(1,1,80,25);
+	textbackground(RED);
+	clrscr();
+
+	window(5,2,77,24);
+	textbackground(YELLOW);
+	clrscr();
+	window(9,4,70,22);
+	textbackground(WHITE);
+	clrscr();
+
+	textcolor(BLUE);
+	printf("\n\n\n\n\n\n\n\t\t\t");
+	cprintf(" <<< WELCOME TO OUR WEBSITE >>>");
+
+	char ch;
+	textcolor(RED+BLUE);
+	printf("\n\n\n\n\n\t\t\t");
+	cprintf(" <<< PRESS ENTER TO ENTER >>> ");
+	printf("\n\n\t\t\t\t");
+	cprintf("Niranjan Tiwari");
+	while(1){
+		ch=getch();
+		if(ch==13){
+			menu();
+			break;
+		}
+		else{
+			printf("\n\n\t\t\t");
+			cprintf("<<< DONT PRESS WRONG KEY >>>");
+			delay(2000);
+			break;
+		}
+	}
+return 0;
+}
+
+void menu(){
+	window(2,2,79,23.5);
+	textbackground(BLACK);
+	clrscr();
+	int opt;
+	printf("\n\n\n\t\t********************* MENU *********************");
+	printf("\n\n\t\t*              1.LOGIN                          * ");
+	printf("\n\n\t\t*              2.REGISTER 			*");
+	printf("\n\n\t\t*	       3.BE-OUR-SPECIAL-CUSTOMER 		*");
+	printf("\n\n\t\t*	       4.GUEST USER 			*");
+	printf("\n\n\t\t*	       5.EXIT 				*");
+	printf("\n\n\n\t\t************************************************");
+
+	printf("\n\n\tENTER YOUR CHOICE (1-5) >>> ");
+	scanf("%d",&opt);
+	conditional(opt);
+return;
+}
+
+void conditional(int c){
+	switch(c){
+		case 1:login();
+			break;
+		case 2:registr();
+			break;
+		case 3:info();
+			delay(1000);
+			menu();
+			break;
+		case 4:weblayout();
+			break;
+
+	      case 5:
+		window(2,2,79,23.5);
+		textbackground(BLACK);
+		textcolor(WHITE);
+		printf("\n\n\n\t\t\t\n\t");
+		cprintf("THANKS FOR VISITING...");
+			delay(2000);
+			exit(0);
+			break;
+	      default:textcolor(YELLOW+BLINK);
+			printf("\n\t\t");
+			cprintf("PLEASE ENTER VALID CHOICE >>> ");
+			printf("\n\tPRESS A KEY TO EXIT >>> ");
+			getch();
+			exit(0);
+			break;
+	}
+return;
+}
+void registr(){
+	window(2,2,78,23);
+	textbackground(CYAN);
+	clrscr();
+	FILE *ptr1 , *ptr2;
+	typedef struct student{
+		char userName[30];
+		char passWord[30];
+		char confirm[30];
+		char email[50];
+	}x;
+	x s1;
+	ptr1=fopen("username.txt","w");
+	ptr2=fopen("password.txt","w");
+	printf("\n\n\n\tENTER A USERNAME>>> ");
+	flushall();
+	gets(s1.userName);
+	fputs(s1.userName,ptr1);
+re_register:
+	printf("\n\n\tENTER A EMAIL-ID>>>  ");
+	gets(s1.email);
+	int flag=0;
+	for(int x1=0;x1<50;x1++){
+		if(s1.email[x1]=='@' || s1.email[x1]=='.'){
+			flag=1;
+		}
+
+	}
+	if(!flag){
+	    textcolor(RED);
+	    printf("\n\t");
+	    cprintf("!!! EMAIL SHOULD HAVE @ AND . SYMBOL... ");
+	    goto re_register;
+	}
+	printf("\n\n\tENTER A STRONG PASSWORD>>> ");
+	flushall();
+	gets(s1.passWord);
+	fputs(s1.passWord,ptr2);
+	flushall();
+	printf("\n\n\tCONFIRM PASSWORD>>> ");
+	gets(s1.confirm);
+	fclose(ptr1);
+	fclose(ptr2);
+	if(strcmp(s1.passWord,s1.confirm)==0){
+		window(5,2,76,23);
+		textbackground(BLACK);
+		clrscr();
+		printf("\n\t	<<< REGISTRATION SUCCESSFUL >>>");
+		printf("\n\tPLEASE LOGIN WITH ABOVE DETAILS>>> ");
+		delay(100);
+		menu();
+	}
+	else{
+		window(2,2,78,23);
+		textbackground(CYAN);
+		clrscr();
+		printf("\n\n\t\tOPPS ! BOTH PASSWORD SHOULD BE SAME  ");
+		menu();
+	}
+
+
+return;
+}
+void login(){
+	window(3,2,77,23);
+	textbackground(15);
+	clrscr();
+	char uName[30],paswrd[20],userName[30],passWord[30];
+	FILE *ptr1,*ptr2;
+	ptr1=fopen("username.txt","r");
+	ptr2=fopen("password.txt","r");
+	printf("\n\n\tENTER YOUR USERNAME>>> ");
+	flushall();
+	gets(uName);
+	fgets(userName,20,ptr1);
+
+	printf("\n\tENTER YOUR PASSWORD>>> ");
+	gets(paswrd);
+	fgets(passWord,20,ptr2);
+	fclose(ptr1);
+	fclose(ptr2);
+	if(( strcmp(passWord,paswrd)==0 ) && ( strcmp(userName,uName)==0) ){
+		window(15,7,60,18);
+		textbackground(BLUE);
+		clrscr();
+		textcolor(YELLOW+BLINK);
+		cprintf("\nLOGIN SUCCESSFUL ");
+		cprintf("\nPlEASE WAIT..........");
+		delay(2000);
+		clrscr();
+		textcolor(RED);
+		weblayout();
+
+	}
+	else{
+		window(1,1,80,25);
+		textbackground(BLACK);
+		clrscr();
+		textcolor(YELLOW);
+		printf("\n\t\t\tWRONG LOGIN ID OR PASSWORD ");
+		printf("\n\t\tREMEMBER YOU CAN RECOVER YOUR PASSWORD ");
+		menu();
+	}
+
+return;
+}
+
+void weblayout(){
+	window(1,1,80,25);
+	textbackground(CYAN);
+	clrscr();
+
+	window(1,1,80,1.3);
+	textbackground(BLACK);
+	clrscr();
+
+	textcolor(WHITE);
+	cprintf(" CSE-GAYA ");
+	printf("\t\t\t\t");
+	textcolor(YELLOW);
+	cprintf("DISHES  CONTACTS  ABOUT  CHECK-BILL   ");
+	menu2();
+return;
+}
+void menu2(){
+	int input;
+	printf("\n\n");
+	printf("****************** WHAT U WANT TO DO ***************");
+	printf("\n");
+	printf(" * 	1.DISHES 				   *");
+	printf("\n");
+	printf(" *	2.PEOPLE-REGISTERED				   *");
+	printf("\n");
+	printf(" *	3.ABOUT US				   *");
+	printf("\n");
+	printf(" *	4.GO-BACK TO MENU			   *");
+	printf("\n");
+	printf(" *	5.EXIT					   *");
+	printf("\n");
+	printf("****************************************************");
+	printf("\n\n\t ENTER YOUR CHOICE (1-5) >>> ");
+	scanf("%d",&input);
+	options(input);
+return;
+}
+void options(int input){
+	switch(input){
+		case 1:dishes();
+			break;
+		case 2:showInfo();
+			weblayout();
+			break;
+		case 3:about();
+			break;
+		case 4:menu();
+			break;
+		case 5:window(1,1,80,25);
+			textbackground(YELLOW);
+			clrscr();
+			textcolor(WHITE);
+			printf("\n\n\n\n\n\t\t");
+			cprintf("THANKS FOR VISITING ");
+			delay(3000);
+			exit(0);
+			break;
+		default:window(1,1,80,25);
+			textbackground(YELLOW+GREEN);
+			clrscr();
+			textcolor(WHITE);
+			printf("\n\n\n\n\n\t\t");
+			cprintf("<<< ENTER VALID CHOICE >>> ");
+			printf("\n\nPress a key to go Back ");
+			getch();
+			weblayout();
+			break;
+	}
+return;
+}
+void about(){
+	int i;
+	window(1,1,80,25);
+	textbackground(BLACK);
+	textbackground(CYAN);
+	textcolor(RED);
+	clrscr();
+	printf("\n\t\t\t");
+	cprintf("CREATORS");
+	printf("\n");
+	for(i=1;i<=80;i++)
+		printf("=");
+	printf("\n\t\t");
+	cprintf("1.NIRANJAN TIWARI");
+	printf("\n\t\t");
+	cprintf("GCE GAYA");
+	printf("\n\t\t");
+	cprintf("Reg.NO>> 21105110007 ");
+	printf("\n");
+	cprintf("Roll.NO>> 21-CSE-08 ");
+	printf("\n");
+	for(i=1;i<=80;i++)
+		printf("=");
+	printf("\n");
+	textcolor(BLUE);
+	cprintf("\We The Students Of Gaya College Of Engineering Have Started Our Own Website for Our Canteen...");
+
+	printf("\n\n\b\b\bPress a key to go back");
+	getch();
+	weblayout();
+return;
+}
+
+
+void dishes(){
+	window(1,1,80,25);
+	textbackground(WHITE+LIGHTGREEN+CYAN);
+	clrscr();
+	window(1,1,80,1.4);
+	textbackground(BLACK);
+	clrscr();
+	int i;
+	textcolor(YELLOW);
+	cprintf(" CSE-GAYA ");
+	printf("\t\t\t\t\t");
+	textcolor(YELLOW);
+	cprintf(" HOME  ABOUT  CONTACTS  SERVICES");
+	printf("\n\n");
+	for(i=1;i<81;i++)
+		printf("=");
+	gotoxy(20,6) ;
+	printf("\n\n\t\t1.BREAK-FAST ");
+	gotoxy(20,7);
+	printf("\n\t\t2.LUNCH");
+	gotoxy(20,8);
+	printf("\n\t\t3.DINNER");
+	gotoxy(20,9);
+	printf("\n\t\t4.SEE-ALL-MEMBERS-WHO-VISITED");
+	gotoxy(20,10);
+	printf("\n\t\t5.BACK TO HOME PAGE ");
+	gotoxy(20,11);
+	printf("\n\t\t6.EXIT\n\n");
+	gotoxy(1,12.5);
+	textcolor(BLUE);
+	printf("\n");
+	for(i=1;i<81;i++)
+		printf("=");
+	select();
+return;
+}
+
+void select(){
+	int  c;
+	gotoxy(15,14);
+	printf("\n\tENTER YOUR CHOICE (1-6) >>> ");
+	scanf("%d",&c);
+	switch(c){
+		case 1:window(5,4,75,22);
+			textbackground(BLACK);
+			textcolor(GREEN);
+			clrscr();
+			breakfast();
+			break;
+		case 2: window(5,4,75,22);
+			textbackground(BLACK);
+			textcolor(GREEN);
+			clrscr();
+			dinner();
+			break;
+		case 3: window(5,4,75,22);
+			textbackground(BLACK);
+			textcolor(GREEN);
+			clrscr();
+			lunch();
+			break;
+		case 4:showInfo();
+			weblayout();
+			break;
+		case 6:exit(0);
+			break;
+		default:window(2,2,79,24);
+			textbackground(BLACK);
+			clrscr();
+			textcolor(WHITE);
+			printf("\n\n\n\n\t\t");
+			cprintf("ENTER VALID CHOICE...");
+			printf("\n\nPress A Key To Go Back ");
+			getch();
+			weblayout();
+			break;
+	}
+return;
+}
+
+void info(){
+	FILE *p;
+	window(1,1,80,25);
+	textbackground(CYAN+RED);
+	clrscr();
+	textcolor(WHITE);
+	printf("\n\t YOU HAVE TO ENTER SOME OF YOUR DETAILS >>> \n");
+	printf("===========================================================");
+	printf("\n\tENTER YOUR NAME :>>> ");
+	fflush(stdin);
+	gets(man.name);
+	printf("\n\tENTER YOUR AGE :>>> ");
+	fflush(stdin);
+	scanf("%d",&man.age);
+	printf("\n\tENTER CATEGORY ( BREAK-FAST / LUNCH / DINNER ) >>> ");
+	fflush(stdin);
+	gets(man.category);
+	printf("\n\tENTER YOUR EMAIL ID >>> ");
+	fflush(stdin);
+	gets(man.email);
+	printf("\n\tENTER YOUR CONTACT NUMBER >>> ");
+	gets(man.contact);
+	fflush(stdin);
+	p=fopen("info.txt","ab");
+	fwrite(&man,sizeof(man),1,p);
+	fclose(p);
+	textcolor(WHITE);
+	printf("\t\t\nSuccessFully  Saved , Press Any Key...");
+getch();
+return;
+}
+void showInfo(){
+	FILE *f;
+	int i;
+	window(1,1,80,25);
+	textbackground(BLACK);
+	textcolor(YELLOW);
+	clrscr();
+	gotoxy(34,1);
+	printf("\n\t\t\b\b\tLIST OF CONTACTS\n");
+	for(i=1;i<=80;i++)
+		printf("=");
+	printf("\n");
+	gotoxy(2,5);
+	printf("S.NO");
+	gotoxy(10,5);
+	printf("Name ");
+	gotoxy(25,5);
+	printf("Category");
+	gotoxy(40,5);
+	printf("Contact");
+	gotoxy(56,5);
+	printf("Email-Id");
+	printf("\n");
+	for(i=1;i<=80;i++)
+		printf("=");
+	printf("\n");
+	f=fopen("info.txt","rb");
+	i=5;
+	int sno=1;
+	int t=7;
+	textcolor(BLACK);
+	while(fread(&man,sizeof(man),1,f)!=NULL){
+	       gotoxy(2,t);
+	       printf("%d",sno++);
+	       gotoxy(7,t);
+	       printf("%s",man.name);
+	       gotoxy(25,t);
+	       printf("%s",man.category);
+	       gotoxy(38,t);
+	       printf("%s",man.contact);
+	       gotoxy(54,t);
+	       printf("%s",man.email);
+	       t++;
+	}
+	fclose(f);
+	textcolor(GREEN);
+	printf("\n\n\t\t");
+	cprintf(" Press A Key To Continue  ");
+	textcolor(WHITE);
+getch();
+return;
+}
+
+
+void breakfast(){
+	char ch;
+	printf("\n\n\tSelect (v) for VEG or (n) for  NON-VEG ");
+	printf("Give your choice >>> ");
+	fflush(stdin);
+	scanf("%c",&ch);
+	if(ch=='v' || ch=='V'){
+		textcolor(BLACK);
+		window(1,1,80,25);
+		textbackground(WHITE+GREEN+YELLOW);
+		clrscr();
+		printf("\n\n");
+		printf("\n");
+		printf(" <<< WELCOME TO CSE-GAYA CANTEEN >>>");
+		printf("\n\n");
+		printf(" ********************** DISHES WE OFFER ********************* ");
+		printf("\n");
+		printf("         -DISHES-	   -PRICE-	-QUANTITY-     -LIMIT- ");
+		printf("\n");
+		printf("	1.SAMOSA	    Rs.8	PER-PIECE 	6-PIECES");
+		printf("\n");
+		printf("	2.CHOLA-PURI 	    Rs.50	PLATE		2-PLATE	");
+		printf("\n");
+		printf("	3.VEG-MOMOS	    Rs.50	PLATE		4-PLATE ");
+		printf("\n");
+		printf("	4.NAAN		    Rs.30	PLATE		2-PLATE ");
+		printf("\n");
+		printf("	5.ROTI-CHOLA	    Rs.50	PLATE		4-PLATE ");
+		printf("\n");
+		printf("	6.CHAUMIN	    Rs.30	PLATE	 	4-PLATE ");
+		printf("\n\n");
+		printf("   -->  7.GO BACK TO MAIN SCREEN  <-- 	");
+		printf("\n");
+		printf("   -->  8. EXIT FROM WEBSITE <-- ");
+		printf("\n\n");
+		choose();
+	}
+	else if(ch=='n' || ch=='N' ){
+		textcolor(BLACK);
+		window(1,1,80,25);
+		textbackground(WHITE+GREEN+YELLOW);
+		clrscr();
+		printf("\n\n");
+		printf("\n");
+		printf(" <<< WELCOME TO CSE-GAYA CANTEEN >>>");
+		printf("\n\n");
+		printf(" ********************** DISHES WE OFFER ********************* ");
+		printf("\n");
+		printf("         -DISHES-	   -PRICE-	-QUANTITY-     -LIMIT- ");
+		printf("\n");
+		printf("	1.SAMOSA	    Rs.8	PER-PIECE 	6-PIECES");
+		printf("\n");
+		printf("	2.CHOLA-PURI 	    Rs.50	PLATE		2-PLATE	");
+		printf("\n");
+		printf("	3.VEG-MOMOS	    Rs.50	PLATE		4-PLATE ");
+		printf("\n");
+		printf("	4.NAAN		    Rs.30	PLATE		2-PLATE ");
+		printf("\n");
+		printf("	5.ROTI-CHOLA	    Rs.50	PLATE		4-PLATE ");
+		printf("\n");
+		printf("	6.CHAUMIN	    Rs.30	PLATE	 	4-PLATE ");
+		printf("\n\n");
+		printf("   -->  7.GO BACK TO MAIN SCREEN  <-- 	");
+		printf("\n");
+		printf("   -->  8. EXIT FROM WEBSITE <-- ");
+		printf("\n\n");
+		choose();
+	}
+	else{
+		textcolor(YELLOW+BLINK);
+		printf("\n\n\n\tEnter Valid choice ");
+		printf("\n\tpress a key to continue ...");
+	}
+getch();
+
+return;
+}
+void lunch(){
+	char ch;
+	printf("\n\n\tSelect (v) for VEG or (n) for  NON-VEG ");
+	printf("Give your choice >>> ");
+	fflush(stdin);
+	ch=getch();
+	if(ch=='v' || ch=='V'){
+		textcolor(BLACK);
+		window(1,1,80,25);
+		textbackground(WHITE+GREEN+YELLOW);
+		clrscr();
+		printf("\n\n");
+		printf("\n");
+		printf(" <<< WELCOME TO CSE-GAYA CANTEEN >>>");
+		printf("\n\n");
+		printf(" ********************** DISHES WE OFFER ********************* ");
+		printf("\n");
+		printf("         -DISHES-	   -PRICE-	-QUANTITY-     -LIMIT- ");
+		printf("\n");
+		printf("	1.SAMOSA	    Rs.8	PER-PIECE 	6-PIECES");
+		printf("\n");
+		printf("	2.CHOLA-PURI 	    Rs.50	PLATE		2-PLATE	");
+		printf("\n");
+		printf("	3.VEG-MOMOS	    Rs.50	PLATE		4-PLATE ");
+		printf("\n");
+		printf("	4.NAAN		    Rs.30	PLATE		2-PLATE ");
+		printf("\n");
+		printf("	5.ROTI-CHOLA	    Rs.50	PLATE		4-PLATE ");
+		printf("\n");
+		printf("	6.CHAUMIN	    Rs.30	PLATE	 	4-PLATE ");
+		printf("\n\n");
+		printf("   -->  7.GO BACK TO MAIN SCREEN  <-- 	");
+		printf("\n");
+		printf("   -->  8. EXIT FROM WEBSITE <-- ");
+		printf("\n\n");
+		choose();
+	}
+	else if(ch=='N' || ch=='n' ){
+		textcolor(BLACK);
+		window(1,1,80,25);
+		textbackground(WHITE+GREEN+YELLOW);
+		clrscr();
+		printf("\n\n");
+		printf("\n");
+		printf(" <<< WELCOME TO CSE-GAYA CANTEEN >>>");
+		printf("\n\n");
+		printf(" ********************** DISHES WE OFFER ********************* ");
+		printf("\n");
+		printf("         -DISHES-	   -PRICE-	-QUANTITY-     -LIMIT- ");
+		printf("\n");
+		printf("	1.SAMOSA	    Rs.8	PER-PIECE 	6-PIECES");
+		printf("\n");
+		printf("	2.CHOLA-PURI 	    Rs.50	PLATE		2-PLATE	");
+		printf("\n");
+		printf("	3.VEG-MOMOS	    Rs.50	PLATE		4-PLATE ");
+		printf("\n");
+		printf("	4.NAAN		    Rs.30	PLATE		2-PLATE ");
+		printf("\n");
+		printf("	5.ROTI-CHOLA	    Rs.50	PLATE		4-PLATE ");
+		printf("\n");
+		printf("	6.CHAUMIN	    Rs.30	PLATE	 	4-PLATE ");
+		printf("\n\n");
+		printf("   -->  7.GO BACK TO MAIN SCREEN  <-- 	");
+		printf("\n");
+		printf("   -->  8. EXIT FROM WEBSITE <-- ");
+		printf("\n\n");
+		choose();
+	}
+	else{
+		textcolor(YELLOW+BLINK);
+		printf("\n\n\n\tEnter Valid choice ");
+		printf("\n\tpress a key to continue ...");
+	}
+getch();
+
+return;
+}
+void dinner(){
+	char ch;
+	printf("\n\n\tSelect (v) for VEG or (n) for  NON-VEG ");
+	printf("Give your choice >>> ");
+	fflush(stdin);
+	ch=getch();
+	if(ch=='v' || ch=='V' ){
+		textcolor(BLACK);
+		window(1,1,80,25);
+		textbackground(WHITE+GREEN+YELLOW);
+		clrscr();
+		printf("\n\n");
+		printf("\n");
+		printf(" <<< WELCOME TO CSE-GAYA CANTEEN >>>");
+		printf("\n\n");
+		printf(" ********************** DISHES WE OFFER ********************* ");
+		printf("\n");
+		printf("         -DISHES-	   -PRICE-	-QUANTITY-     -LIMIT- ");
+		printf("\n");
+		printf("	1.SAMOSA	    Rs.8	PER-PIECE 	6-PIECES");
+		printf("\n");
+		printf("	2.CHOLA-PURI 	    Rs.50	PLATE		2-PLATE	");
+		printf("\n");
+		printf("	3.VEG-MOMOS	    Rs.50	PLATE		4-PLATE ");
+		printf("\n");
+		printf("	4.NAAN		    Rs.30	PLATE		2-PLATE ");
+		printf("\n");
+		printf("	5.ROTI-CHOLA	    Rs.50	PLATE		4-PLATE ");
+		printf("\n");
+		printf("	6.CHAUMIN	    Rs.30	PLATE	 	4-PLATE ");
+		printf("\n\n");
+		printf("   -->  7.GO BACK TO MAIN SCREEN  <-- 	");
+		printf("\n");
+		printf("   -->  8. EXIT FROM WEBSITE <-- ");
+		printf("\n\n");
+		choose();
+	}
+	else if(ch=='n' || ch=='N' ){
+		textcolor(BLACK);
+		window(1,1,80,25);
+		textbackground(WHITE+GREEN+YELLOW);
+		clrscr();
+		printf("\n\n");
+		printf("\n");
+		printf(" <<< WELCOME TO CSE-GAYA CANTEEN >>>");
+		printf("\n\n");
+		printf(" ********************** DISHES WE OFFER ********************* ");
+		printf("\n");
+		printf("         -DISHES-	   -PRICE-	-QUANTITY-     -LIMIT- ");
+		printf("\n");
+		printf("	1.SAMOSA	    Rs.8	PER-PIECE 	6-PIECES");
+		printf("\n");
+		printf("	2.CHOLA-PURI 	    Rs.50	PLATE		2-PLATE	");
+		printf("\n");
+		printf("	3.VEG-MOMOS	    Rs.50	PLATE		4-PLATE ");
+		printf("\n");
+		printf("	4.NAAN		    Rs.30	PLATE		2-PLATE ");
+		printf("\n");
+		printf("	5.ROTI-CHOLA	    Rs.50	PLATE		4-PLATE ");
+		printf("\n");
+		printf("	6.CHAUMIN	    Rs.30	PLATE	 	4-PLATE ");
+		printf("\n\n");
+		printf("   -->  7.GO BACK TO MAIN SCREEN  <-- 	");
+		printf("\n");
+		printf("   -->  8. EXIT FROM WEBSITE <-- ");
+		printf("\n\n");
+		choose();
+	}
+	else{
+		textcolor(YELLOW+BLINK);
+		printf("\n\n\n\tEnter Valid choice ");
+		printf("\n\tpress a key to continue ...");
+	}
+getch();
+
+return;
+}
+void choose(){
+	int d,t,sum=0;
+   while(1){
+	textcolor(RED+WHITE+BLUE);
+	printf("\n\n\tENTER YOUR CHOICE >>> ");
+	scanf("%d",&d);
+	switch(d){
+		case 1: window(2,3,77,23);
+			textbackground(BLACK);
+			clrscr();
+			FILE *f1;
+
+			//f2=fopen("bill.txt","w");
+			gotoxy(15,30);
+			textcolor(CYAN);
+			f1=fopen("food.txt","ab");
+			printf("\n\n\b\b\b\b");
+			cprintf(" ENTER HOW MANY PIECES OF SAMOSAS YOU WANT WITH KETCHUP >>> ");
+			cscanf("%d",&t);
+			fprintf(f1,"\b\b%d SAMOSA \n",t);
+			if(t<=6 && t>=1){
+				printf("\n\n\n\t");
+				gotoxy(29,28);
+				textcolor(YELLOW);
+				sum=sum+t;
+				if(sum>6){
+					printf("\n\n\n\t");
+					cprintf("YOUR LIMIT REACHED ");
+					delay(3000);
+					dishes();
+					break;
+				}
+				else{
+					cprintf("%d SAMOSA WILL BE DELIVERED TO YOU WITHIN 30 MINUTES ",t);
+					fprintf(f1,"\b\b\n<<< Total Money You Have to Pay is %d >> ", t*8);
+					delay(3000);
+					dishes();
+					break;
+				}
+			}
+			else{
+				printf("\n\n\n\t");
+				textcolor(YELLOW+CYAN);
+				cprintf(" SORRY LIMIT EXCEEDED ");
+				delay(3000);
+				dishes();
+				break;
+			}
+
+		case 2: window(2,2,76,23);
+			textbackground(BLACK);
+			clrscr();
+			printf("\n\n   ");
+			textcolor(BLACK+GREEN+RED);
+			cprintf("\nENTER HOW MANY PLATES ( CHOLA-PURI ) YOU WANT >>> ");
+			cscanf("%d",&t);
+			if(t<=4 && t>=1){
+				printf("\n\n\t");
+				textcolor(YELLOW);
+				gotoxy(10,20);
+				clrscr();
+				cprintf(" %d CHOLA_PURI WILL BE GIVEN TO YOU WITHIN 4 MINUTES ",t);
+				delay(3000);
+				dishes();
+				break;
+			}
+			else{
+				printf("\n\n\n\t");
+				textcolor(YELLOW);
+				gotoxy(16,25);
+				clrscr();
+				cprintf("  YOUR DISH AMOUNT SHOULD BE UNDER LIMIT >>> ");
+				delay(3000);
+				clrscr();
+				dishes();
+				break;
+			}
+
+		case 3: window(2,3,76,23);
+			textbackground(BLACK);
+			clrscr();
+			textcolor(CYAN + GREEN+BLUE);
+			cprintf("\nENTER HOW MANY PLATES ( VEG-MOMOS ) YOU WANT >>> ");
+			cscanf("%d",&t);
+			if(t<=4 && t>=1){
+				printf("\n\n\t");
+				clrscr();
+				textcolor(YELLOW);
+				gotoxy(25,43);
+				cprintf(" %d PLATES VEG-MONMO  WILL BE GIVEN TO YOU WITHIN 4 MINUTES ",t);
+				delay(3000);
+				dishes();
+				break;
+			}
+			else{
+				printf("\n\n\n\t");
+				clrscr();
+				textcolor(WHITE);
+				gotoxy(26,34);
+				cprintf("  YOUR DISH QUANTITY SHOULD BE UNDER LIMIT >>> ");
+				delay(3000);
+				dishes();
+				break;
+			}
+
+		case 4: window(2,3,76,23);
+			textbackground(BLACK);
+			clrscr();
+			textcolor(MAGENTA);
+			cprintf("\nENTER HOW MANY PLATES ( NAAN ) YOU WANT >>> ");
+			cscanf("%d",&t);
+			if(t<=4 && t>=1){
+				printf("\n\n\t");
+				textcolor(WHITE);
+				cprintf(" %d PLATES NAAN WILL BE GIVEN TO YOU WITHIN 4 MINUTES ",t);
+				delay(3000);
+				dishes();
+				break;
+			}
+			else{
+				printf("\n\n\n\t");
+				textcolor(WHITE);
+				cprintf("  YOUR DISH AMOUNT SHOULD BE UNDER LIMIT >>> ");
+				delay(1000);
+				dishes();
+				break;
+			}
+
+		case 5: window(2,3,76,23);
+			textbackground(BLACK);
+			clrscr();
+			printf("\n\n\t     ");
+			textcolor(YELLOW);
+			cprintf("ENTER HOW MANY PLATES ( ROTI-CHOLA ) YOU WANT >>> ");
+			cscanf("%d",&t);
+			if(t<=4 && t>=1){
+				printf("\n\n\t");
+				textcolor(YELLOW+WHITE);
+				cprintf(" %d PLATES ROTI-CHOLA   WILL BE GIVEN TO YOU WITHIN 4 MINUTES ",t);
+				delay(3000);
+				dishes();
+				break;
+			}else{
+				printf("\n\n\n\t");
+				textcolor(YELLOW+WHITE);
+				cprintf("  YOUR DISH AMOUNT SHOULD BE UNDER LIMIT >>> ");
+				delay(3000);
+				dishes();
+				break;
+			}
+
+		case 6: window(2,4,76,23);
+			textbackground(BLACK);
+			clrscr();
+			textcolor(WHITE);
+			cprintf("\nENTER HOW MANY PLATES CHAUMIN YOU WANT WITH >>> ");
+			cscanf("%d",&t);
+			if(t<=4 && t>=1){
+				printf("\n\n\t");
+				textcolor(YELLOW+BLUE);
+				cprintf(" %d PLATES CHAUMIN WILL BE GIVEN TO YOU WITHIN 4 MINUTES ",t);
+				delay(3000);
+				dishes();
+				break;
+			}
+			else{
+				printf("\n\n\n\t");
+				textcolor(CYAN+YELLOW);
+				cprintf("  YOUR DISH AMOUNT SHOULD BE UNDER LIMIT >>> ");
+				delay(3000);
+				dishes();
+				break;
+			}
+
+		case 7: window(2,3,76,23);
+			textbackground(BLACK+BLUE+RED);
+			clrscr();
+			textcolor(WHITE + BLINK);
+			printf("\n\n\n\n   ");
+			cprintf(" YOU ARE GOING TO THE MAIN SCREEN... ");
+			delay(3000);
+			textcolor(BLUE);
+			weblayout();
+			break;
+
+		case 8: window(2,3,76,23);
+			textbackground(BLACK);
+			clrscr();
+			textcolor(LIGHTGREEN);
+			cprintf("\nTHANKS TO VISIT US ");
+			delay(3000);
+			exit(0);
+			break;
+
+		default:window(2,3,76,22);
+			textbackground(BLACK);
+			clrscr();
+			textcolor(LIGHTGREEN);
+			cprintf("\nPLEASE ENTER VALID CHOICE ");
+			delay(3000);
+			dishes();
+			break;
+		}
+	}
+}
